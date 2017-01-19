@@ -23,7 +23,7 @@
 
 "publishOptions": {
     "include": [
-        "Content",
+        "wwwroot",
         "Views",
         "web.config"
     ]
