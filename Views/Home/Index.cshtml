@@ -1,0 +1,58 @@
+@{
+    ViewData["Title"] = "Home Page";
+}
+<div id="wrapper">
+<h1>Dojodachi</h1>
+<div id="stats">
+<p>Fullness: @ViewBag.Fullness  Happiness: @ViewBag.Happiness Meals: @ViewBag.Meals Energy: @ViewBag.Energy</p>
+    <img src=@ViewBag.Pic alt="Dojogotchi">
+        <p>@ViewBag.Message</p>
+<!--</div>-->
+
+@if(@ViewBag.Win > 0){
+    <!--<div id="buttons">-->
+            <form action="/reset" method="post">
+                <input type="hidden" name="action" value="playAgain"/>
+                <input type="submit" value="Play Again?"/>
+            </form>
+    <!--</div>-->
+    }
+   else{
+    <div id="buttons">
+            <form action="/action" method="post" class="button">
+                <input type="hidden" name="action" value="feed"/>
+                <input type="submit" value="Feed"/>
+            </form>
+            <form action="/action" method="post" class="button">
+                <input type="hidden" name="action" value="play"/>
+                <input type="submit" value="Play"/>
+            </form>
+            <form action="/action" method="post" class="button">
+                <input type="hidden" name="action" value="work"/>
+                <input type="submit" value="Work"/>
+            </form>
+            <form action="/action" method="post" class="button">
+                <input type="hidden" name="action" value="sleep"/>
+                <input type="submit" value="Sleep"/>
+            </form>
+    </div>
+   }</div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $('.button').submit(function(event){
+            event.preventDefault();
+            var $form = $(this);
+            console.log($form);
+            url = $form.attr("action");
+            $.post(url, $form.serialize(), function(data){
+                
+                var newHTML = $(data).find('#stats')[0];
+                console.log(newHTML);
+                $('#stats').html(newHTML);
+            })
+        })
+})
+   
+</script>
